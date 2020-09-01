@@ -117,15 +117,17 @@ for i in lat_lon['FIPS '].unique():
     else:
         lat_lon.loc[i,'max_risk'] = 0.0
 
-lat_lon['NEVER MASK'] = lat_lon['NEVER MASK']*10000
-lat_lon['max_risk'] = round((lat_lon['max_risk'].astype(int)/lat_lon['Population(2010)'])*10000)
-lat_lon['NEVER MASK'] = lat_lon['NEVER MASK'].astype(str)
-lat_lon['max_risk'] = lat_lon['max_risk'].astype(str)
+lat_lon['NEVER MASK'] = lat_lon['NEVER MASK']*100
+lat_lon['NEVER MASK'] = round(lat_lon['NEVER MASK'].astype(float))
+lat_lon['NEVER MASK'] = lat_lon['NEVER MASK'].astype(int)
+lat_lon['max_risk'] = round(lat_lon['max_risk'])
+lat_lon['max_risk'] = lat_lon['max_risk'].astype(int)
+
 #lat_lon['Hover'] = lat_lon['Hover'].str.cat(lat_lon['NEVER MASK'],sep='<br>% Population Never Use Mask')
 
 
 # %%
-lat_lon['Hover'] = lat_lon['Hover']+'<br>'+'Per 10,000 People'+lat_lon['NEVER MASK'].astype(str)+' Not using Mask'+'<br>'+'Max of '+lat_lon['max_risk'].astype(str)+' People can get Infected'
+lat_lon['Hover'] = lat_lon['Hover']+'<br>'+'Every 100 People '+lat_lon['NEVER MASK'].astype(str)+' never uses mask'+'<br>'+'Max of '+lat_lon['max_risk'].astype(str)+' People can get Infected today'
 
 
 # %%
@@ -134,13 +136,6 @@ lat_lon['FIPS '] = lat_lon['FIPS '].apply(lambda x: str(x).zfill(5))
 
 # %%
 lat_lon.to_csv('final.csv')
-
-
-# %%
-lat_lon.head()
-
-
-# %%
 
 
 
