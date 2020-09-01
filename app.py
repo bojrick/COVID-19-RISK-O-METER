@@ -11,8 +11,11 @@ import cufflinks as cf
 from urllib.request import urlopen
 import json
 import plotly.graph_objects as go
+from datetime import date
 
 # Initialize app
+
+today = date.today().strftime("%B %d, %Y")
 
 mapbox_access_token = "pk.eyJ1IjoieXBhdGVsNTMiLCJhIjoiY2tlM3RyNTA4MDlydjJybW5sNTByZnpndSJ9.VCsPyg4mTUCTZ4WqnCvMNA"
 mapbox_style = "mapbox://styles/plotlymapbox/cjvprkf3t1kns1cqjxuxmwixz"
@@ -78,7 +81,7 @@ app.layout = html.Div(
                             id="heatmap-container",
                             children=[
                                 html.P(id="heatmap-title",
-                                    children="Estimated Maximum Number of People who can get infected on 29th August"
+                                    children="Estimated Maximum Number of People who can get infected on "+today
                                 ),
                                 dcc.Graph(
                                     id="county-choropleth",
