@@ -61,8 +61,9 @@ def final_func():
     lat_lon.dropna(inplace=True)
     lat_lon['NEVER MASK'] = round(lat_lon['NEVER MASK']*10000)
     lat_lon['max_risk'] = round(lat_lon['max_risk'])
-
-    lat_lon['Hover'] = lat_lon['County ']+'<br>'+'Every 10,000 People'+lat_lon['NEVER MASK'].astype(str)+' Not using Mask'+'<br>'+'Max of '+lat_lon['max_risk'].astype(str)+' People can get Infected'
+    lat_lon['NEVER MASK'] = lat_lon['NEVER MASK'].astype(int)
+    lat_lon['max_risk'] = lat_lon['max_risk'].astype(int)
+    lat_lon['Hover'] = lat_lon['County ']+'<br>'+'Every 10,000 People '+lat_lon['NEVER MASK'].astype(str)+' Not using Mask'+'<br>'+'Max of '+lat_lon['max_risk'].astype(str)+' People can get Infected'
     lat_lon['FIPS '] = lat_lon['FIPS '].apply(lambda x: str(x).zfill(5))
     print('As CSV saved')
     lat_lon.to_csv('final.csv')
