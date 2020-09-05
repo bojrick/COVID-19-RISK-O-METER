@@ -65,7 +65,7 @@ def final_func():
     lat_lon['Hover'] = lat_lon['County ']+'<br>'+'Every 10,000 People'+lat_lon['NEVER MASK'].astype(str)+' Not using Mask'+'<br>'+'Max of '+lat_lon['max_risk'].astype(str)+' People can get Infected'
     lat_lon['FIPS '] = lat_lon['FIPS '].apply(lambda x: str(x).zfill(5))
     print('As CSV saved')
-    lat_lon.to_csv('final_df.csv')
+    lat_lon.to_csv('final.csv')
 
 final_func()
 
