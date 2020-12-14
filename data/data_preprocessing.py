@@ -25,6 +25,8 @@ def cases_preprocess(raw_url):
     print('cases_preprocessed')
     return cases_final_df
 
+print(cases_preprocess(cases_url))
+
 def rt_exc(df):
     grp_obj_new = df.groupby('fips')
     median_max = grp_obj_new.max()['increase in cases'].median()
@@ -66,6 +68,7 @@ def final_func():
     lat_lon['Hover'] = lat_lon['County ']+'<br>'+'Every 1,000 People '+lat_lon['NEVER MASK'].astype(str)+' Not using Mask'+'<br>'+'Max of '+lat_lon['max_risk'].astype(str)+' People can get Infected'
     lat_lon['FIPS '] = lat_lon['FIPS '].apply(lambda x: str(x).zfill(5))
     print('As CSV saved')
-    lat_lon.to_csv('data/final.csv')
+    lat_lon.dropna().to_csv('data/final.csv')
 
 final_func()
+                                                                                                                                                                       

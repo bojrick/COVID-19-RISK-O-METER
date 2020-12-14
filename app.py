@@ -12,6 +12,7 @@ from urllib.request import urlopen
 import json
 import plotly.graph_objects as go
 from datetime import date
+import plotly.express as px
 
 # Initialize app
 
@@ -19,6 +20,7 @@ today = date.today().strftime("%B %d, %Y")
 
 mapbox_access_token = "pk.eyJ1IjoieXBhdGVsNTMiLCJhIjoiY2tlM3RyNTA4MDlydjJybW5sNTByZnpndSJ9.VCsPyg4mTUCTZ4WqnCvMNA"
 mapbox_style = "mapbox://styles/plotlymapbox/cjvprkf3t1kns1cqjxuxmwixz"
+px.set_mapbox_access_token(mapbox_access_token)
 
 app = dash.Dash(
     __name__,
@@ -33,27 +35,33 @@ server = app.server
 APP_PATH = str(pathlib.Path(__file__).parent.resolve())
 
 df_lat_lon = pd.read_csv(
-    os.path.join(APP_PATH, os.path.join("data", "final.csv"))
+    os.path.join(
+        APP_PATH, os.path.join("data", "final.csv")
+        )
 )
 df_lat_lon["FIPS "] = df_lat_lon["FIPS "].apply(lambda x: str(x).zfill(5))
 
 with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
     counties = json.load(response)
 
-fig = go.Figure(go.Choroplethmapbox(geojson=counties, 
-                                    locations=df_lat_lon['FIPS '], 
-                                    z=df_lat_lon['max_risk'],
-                                    colorscale="geyser",
-                                    marker_line_width=0, 
-                                    hovertext = df_lat_lon['Hover'],
-                                    hoverinfo='text',
-                                    colorbar=dict(bgcolor='#000000',tickfont=dict(color='#FFFFFF'))))
+fig = px.scatter_mapbox(df_lat_lon, lat="Latitude ", lon="Longitude", color="NEVER MASK", size="max_risk",
+                  color_continuous_scale=px.colors.cyclical.IceFire, size_max=50)
+#fig.show()
 
-fig = fig.update_layout(mapbox_style='light', 
-                        mapbox_accesstoken=mapbox_access_token,
-                        mapbox_zoom=3, 
-                        mapbox_center = {"lat": 37.0902, "lon": -95.7129})
-fig = fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+# fig = go.Figure(go.Choroplethmapbox(geojson=counties, 
+#                                     locations=df_lat_lon['FIPS '], 
+#                                     z=df_lat_lon['max_risk'],
+#                                     colorscale="delta",
+#                                     marker_line_width=0, 
+#                                     hovertext = df_lat_lon['Hover'],
+#                                     hoverinfo='text',
+#                                     colorbar=dict(bgcolor='#000000',tickfont=dict(color='#FFFFFF'))))
+
+# fig = fig.update_layout(mapbox_style='light', 
+#                         mapbox_accesstoken=mapbox_access_token,
+#                         mapbox_zoom=3, 
+#                         mapbox_center = {"lat": 37.0902, "lon": -95.7129})
+# fig = fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
 # App layout
 
