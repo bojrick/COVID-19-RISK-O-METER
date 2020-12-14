@@ -1,4 +1,4 @@
-#%%
+
 import pandas as pd
 import numpy as np
 from datetime import date
@@ -67,11 +67,5 @@ def final_func():
     lat_lon['FIPS '] = lat_lon['FIPS '].apply(lambda x: str(x).zfill(5))
     print('As CSV saved')
     lat_lon.to_csv('final.csv')
-#%%
+
 final_func()
-#import pandas as pd
-
-#pd.read_csv('lat_lon_counties.csv')
-
-
-# %%
