@@ -1,3 +1,4 @@
+#%%
 import pandas as pd
 import numpy as np
 from datetime import date
@@ -43,7 +44,7 @@ def rt_exc(df):
     return df.fillna(0)
 
 def final_func():
-    lat_lon = pd.read_csv('data/lat_lon_counties.csv',thousands=',')
+    lat_lon = pd.read_csv('lat_lon_counties.csv',thousands=',')
     masks = pd.read_csv(mask_url).dropna()
     df = rt_exc(cases_preprocess(cases_url))
     fips_list = lat_lon['FIPS '].astype(int).unique()
@@ -65,8 +66,12 @@ def final_func():
     lat_lon['Hover'] = lat_lon['County ']+'<br>'+'Every 10,000 People '+lat_lon['NEVER MASK'].astype(str)+' Not using Mask'+'<br>'+'Max of '+lat_lon['max_risk'].astype(str)+' People can get Infected'
     lat_lon['FIPS '] = lat_lon['FIPS '].apply(lambda x: str(x).zfill(5))
     print('As CSV saved')
-    lat_lon.to_csv('data/final.csv')
-
+    lat_lon.to_csv('final.csv')
+#%%
 final_func()
+#import pandas as pd
+
+#pd.read_csv('lat_lon_counties.csv')
 
 
+# %%
