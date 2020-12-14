@@ -25,6 +25,8 @@ def cases_preprocess(raw_url):
     print('cases_preprocessed')
     return cases_final_df
 
+print(cases_preprocess(cases_url))
+
 def rt_exc(df):
     grp_obj_new = df.groupby('fips')
     median_max = grp_obj_new.max()['increase in cases'].median()

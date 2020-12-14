@@ -43,7 +43,7 @@ with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-c
 fig = go.Figure(go.Choroplethmapbox(geojson=counties, 
                                     locations=df_lat_lon['FIPS '], 
                                     z=df_lat_lon['max_risk'],
-                                    colorscale="reds",
+                                    colorscale="geyser",
                                     marker_line_width=0, 
                                     hovertext = df_lat_lon['Hover'],
                                     hoverinfo='text',
